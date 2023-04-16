@@ -1,0 +1,19 @@
+spring:
+  flyway:
+    locations: classpath:db/migration/
+    enabled: true
+    clean-disabled: false
+    schemas: public
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: dbadmin
+    url: jdbc:postgresql://localhost:5432/testdb
+    password: dbadmin
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
