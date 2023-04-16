@@ -44,7 +44,7 @@ public class TableService {
 
     public TableDto getTableDto(UUID tableId) {
         return tableRepository.getTableDto(tableId)
-                .orElseThrow(() -> new NotFoundException("Table not found!!"));
+                .orElseThrow(() -> new NotFoundException("Table not found!! id: %s".formatted(tableId)));
     }
 
     public List<TableResponse> getTableResponses(String email) {
