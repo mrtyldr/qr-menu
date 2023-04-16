@@ -13,8 +13,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CheckItems {
-    @Id
-    UUID id;
     UUID itemId;
     Integer quantity;
 
