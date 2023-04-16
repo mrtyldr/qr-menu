@@ -41,12 +41,11 @@ public class MenuController {
 
     @PostMapping("/{restaurantId}/order")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @CrossOrigin
+    @CrossOrigin(value = "https://localhost:3000/**")
     void createOrder(@PathVariable UUID restaurantId,
-                     @RequestBody CreateOrderCommand command,
-                     @RequestParam Map<String, String> itemIds) {
+                     @RequestBody CreateOrderCommand command) {
         Map<UUID, Integer> itemIdsUuid = new HashMap<>();
-        itemIds.forEach((id, quantity) -> itemIdsUuid.put(UUID.fromString(id), Integer.parseInt(quantity)));
+        command.itemIds().forEach((id, quantity) -> itemIdsUuid.put(UUID.fromString(id), Integer.parseInt(quantity)));
         orderService.createOrder(restaurantId, command, itemIdsUuid);
     }
 

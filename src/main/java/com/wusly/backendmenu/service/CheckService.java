@@ -45,7 +45,7 @@ public class CheckService {
 
     private List<CheckItems> getCheckItems(Map<UUID, Integer> itemIds) {
         List<CheckItems> checkItems = new ArrayList<>();
-        itemIds.forEach((uuid, integer) -> checkItems.add(CheckItems.of(uuid, integer)));
+        itemIds.forEach((uuid, integer) -> checkItems.add(new CheckItems(UUID.randomUUID(), uuid, integer)));
         return checkItems;
     }
 }
