@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface TableRepository extends JpaRepository<Table, UUID> {
@@ -18,4 +19,13 @@ public interface TableRepository extends JpaRepository<Table, UUID> {
             where t.restaurantId = :restaurantId
             """)
     List<TableDto> getTableNames(UUID restaurantId);
+    @Query("""
+                        select new com.wusly.backendmenu.domain.table.TableDto(
+                        t.id,
+                        t.name
+                        )
+                        from  Table t
+                        where t.id = :tableId
+            """)
+    Optional<TableDto> getTableDto(UUID tableId);
 }

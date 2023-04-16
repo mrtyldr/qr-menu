@@ -31,4 +31,8 @@ public class Notification extends Aggregate<UUID> {
         this.tableId = tableId;
         this.status = status;
     }
+
+    public void markAsRead() {
+        this.status = NotificationStatus.READ;
+    }
 }

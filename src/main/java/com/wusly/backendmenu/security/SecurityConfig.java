@@ -30,7 +30,8 @@ public class SecurityConfig {
                 .requestMatchers("/swagger-ui.html",
                         "/swagger-ui/**",
                         "/v3/api-docs/**",
-                        "/api/v1/user/**",
+                        "/api/v1/user/login",
+                        "/api/v1/user/register",
                         "/api/v1/public/**")
                 .permitAll()
                 .anyRequest()

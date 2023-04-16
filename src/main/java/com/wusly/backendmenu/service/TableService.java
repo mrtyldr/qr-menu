@@ -3,6 +3,7 @@ package com.wusly.backendmenu.service;
 import com.wusly.backendmenu.domain.table.CreateTableCommand;
 import com.wusly.backendmenu.domain.table.Table;
 import com.wusly.backendmenu.domain.table.TableDto;
+import com.wusly.backendmenu.error.NotFoundException;
 import com.wusly.backendmenu.repository.TableRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,5 +35,10 @@ public class TableService {
 
     public List<TableDto> getTableNames(UUID restaurantId) {
         return tableRepository.getTableNames(restaurantId);
+    }
+
+    public TableDto getTableDto(UUID tableId) {
+        return tableRepository.getTableDto(tableId)
+                .orElseThrow(() -> new NotFoundException("Table not found!!"));
     }
 }
