@@ -11,10 +11,12 @@ import java.util.UUID;
 @Setter
 public class Category extends Aggregate<UUID> {
     private String name;
+    private UUID restaurantId;
 
-    public Category(UUID id,String name) {
+    public Category(UUID id,String name,UUID restaurantId) {
         this.id = id;
         this.name = name;
+        this.restaurantId =restaurantId;
     }
 
     public Category() {
