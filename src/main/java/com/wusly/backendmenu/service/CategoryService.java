@@ -3,6 +3,7 @@ package com.wusly.backendmenu.service;
 import com.wusly.backendmenu.domain.category.AddCategoryCommand;
 import com.wusly.backendmenu.domain.category.Category;
 import com.wusly.backendmenu.domain.category.CategoryResponse;
+import com.wusly.backendmenu.error.NotFoundException;
 import com.wusly.backendmenu.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -49,5 +50,14 @@ public class CategoryService {
 
     public List<Category> getRestaurantCategories(UUID restaurantId) {
         return categoryRepository.findAllByRestaurantId(restaurantId);
+    }
+    @Transactional
+    public void delete(UUID id, String email) {
+        var restaurant = restaurantService.getRestaurantByEmail(email);
+        var category = categoryRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Catehory with Id: %s not found!"));
+        if(!restaurant.getId().equals(category.getRestaurantId()))
+            throw new NotFoundException("Catehory with Id: %s not found!");
+        categoryRepository.delete(category);
     }
 }

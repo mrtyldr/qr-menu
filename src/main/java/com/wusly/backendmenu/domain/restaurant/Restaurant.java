@@ -2,6 +2,8 @@ package com.wusly.backendmenu.domain.restaurant;
 
 import com.wusly.backendmenu.core.Aggregate;
 import jakarta.persistence.Entity;
+import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,7 +17,7 @@ import java.util.UUID;
 @Setter
 @Getter
 public class Restaurant extends Aggregate<UUID> implements UserDetails {
-
+    @NotNull
     private String email;
 
     private String name;
