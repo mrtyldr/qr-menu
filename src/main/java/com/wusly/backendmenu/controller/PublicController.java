@@ -18,7 +18,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/public/p")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
 public class PublicController {
 
