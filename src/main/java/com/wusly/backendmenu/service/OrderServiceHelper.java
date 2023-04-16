@@ -29,4 +29,8 @@ public class OrderServiceHelper {
         );
         orderRepository.save(order);
     }
+
+    public boolean existsByTableIdAndStatus(UUID tableId, OrderStatus status) {
+        return orderRepository.existsByTableIdAndStatus(tableId,status);
+    }
 }

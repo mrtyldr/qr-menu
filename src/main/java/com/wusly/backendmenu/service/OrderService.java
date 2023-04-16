@@ -3,10 +3,10 @@ package com.wusly.backendmenu.service;
 import com.wusly.backendmenu.domain.item.Item;
 import com.wusly.backendmenu.domain.notification.NotificationType;
 import com.wusly.backendmenu.domain.order.CreateOrderCommand;
+import com.wusly.backendmenu.domain.order.OrderStatus;
 import com.wusly.backendmenu.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -37,4 +37,6 @@ public class OrderService {
         }
         return total;
     }
+
+
 }
