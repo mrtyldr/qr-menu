@@ -50,4 +50,17 @@ public class ItemService {
         item.updated(command);
         itemRepository.save(item);
     }
+
+    @Transactional
+    public void delete(UUID id, String email) {
+        var restaurant = restaurantService.getRestaurantByEmail(email);
+
+        var item = itemRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Item not found!"));
+
+        if (!item.getRestaurantId().equals(restaurant.getId()))
+            throw new NotFoundException("Item not found!");
+
+        itemRepository.delete(item);
+    }
 }

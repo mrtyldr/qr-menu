@@ -29,4 +29,10 @@ public class ItemController {
         itemService.updateItem(command, id, principal.getName());
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void deleteItem(@PathVariable UUID id, Principal principal) {
+        itemService.delete(id,principal.getName());
+    }
+
 }
