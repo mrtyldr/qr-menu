@@ -36,4 +36,8 @@ public class Check extends Aggregate<UUID> {
         this.items.addAll(checkItems);
         this.total = total.add(this.total);
     }
+
+    public void closed() {
+        this.status =CheckStatus.CLOSED;
+    }
 }

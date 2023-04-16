@@ -43,4 +43,8 @@ public class Order extends Aggregate<UUID> {
         this.tableId = tableId;
         this.status = status;
     }
+
+    public void closed() {
+        this.status = OrderStatus.CLOSED;
+    }
 }

@@ -2,11 +2,15 @@ package com.wusly.backendmenu.service;
 
 import com.wusly.backendmenu.domain.check.Check;
 import com.wusly.backendmenu.domain.check.CheckStatus;
+import com.wusly.backendmenu.domain.check.CloseCheckCommand;
 import com.wusly.backendmenu.domain.order.CheckItems;
 import com.wusly.backendmenu.domain.order.Order;
+import com.wusly.backendmenu.domain.order.OrderStatus;
+import com.wusly.backendmenu.error.NotFoundException;
 import com.wusly.backendmenu.repository.CheckRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -14,6 +18,8 @@ import java.util.*;
 @RequiredArgsConstructor
 public class CheckService {
     private final CheckRepository checkRepository;
+    private final RestaurantService restaurantService;
+    private final OrderServiceHelper orderServiceHelper;
 
 
     public void orderCreated(Map<UUID, Integer> itemIds, UUID tableId, Order order) {
@@ -52,5 +58,17 @@ public class CheckService {
         List<CheckItems> checkItems = new ArrayList<>();
         itemIds.forEach((uuid, integer) -> checkItems.add(new CheckItems(uuid, integer)));
         return checkItems;
+    }
+
+    @Transactional
+    public void closeCheck(CloseCheckCommand command, String email) {
+        var restaurant = restaurantService.getRestaurantByEmail(email);
+        var check = checkRepository.findByTableIdAndStatus(command.tableId(),CheckStatus.ACTIVE)
+                .orElseThrow(() -> new NotFoundException("CheckNotFound"));
+        var orders = orderServiceHelper.findByTableIdAndStatus(command.tableId(), OrderStatus.ACTIVE);
+        orders.forEach(Order::closed);
+        check.closed();
+        checkRepository.save(check);
+        orderServiceHelper.saveAllOrders(orders);
     }
 }

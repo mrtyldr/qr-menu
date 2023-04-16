@@ -44,4 +44,8 @@ public class OrderServiceHelper {
     public List<String> findNotesByTableIdAndStatus(UUID tableId, OrderStatus orderStatus) {
         return orderRepository.findAllNotesByTableIdAndStatus(tableId,orderStatus);
     }
+
+    public void saveAllOrders(List<Order> orders) {
+        orderRepository.saveAll(orders);
+    }
 }
