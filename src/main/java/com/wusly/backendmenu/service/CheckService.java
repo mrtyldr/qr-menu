@@ -28,7 +28,7 @@ public class CheckService {
         var check = checkRepository.findByTableIdAndStatus(tableId, CheckStatus.ACTIVE)
                 .orElseThrow();
         check.getItems().addAll(checkItems);
-        check.update(checkItems);
+        check.update(checkItems,order.getTotal());
         checkRepository.save(check);
     }
 

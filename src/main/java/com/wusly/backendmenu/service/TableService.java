@@ -1,11 +1,13 @@
 package com.wusly.backendmenu.service;
 
+import com.wusly.backendmenu.domain.check.CheckStatus;
 import com.wusly.backendmenu.domain.item.ItemDto;
 import com.wusly.backendmenu.domain.order.Order;
 import com.wusly.backendmenu.domain.order.OrderStatus;
 import com.wusly.backendmenu.domain.restaurant.Restaurant;
 import com.wusly.backendmenu.domain.table.*;
 import com.wusly.backendmenu.error.NotFoundException;
+import com.wusly.backendmenu.repository.CheckRepository;
 import com.wusly.backendmenu.repository.ItemRepository;
 import com.wusly.backendmenu.repository.TableRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ public class TableService {
     private final TableRepository tableRepository;
     private final OrderServiceHelper orderServiceHelper;
     private final ItemService itemService;
+    private final CheckRepository checkRepository;
 
     @Transactional
     public void create(CreateTableCommand command, String email) {
@@ -75,17 +78,10 @@ public class TableService {
         var restaurant = restaurantService.getRestaurantByEmail(email);
         if (!table.getRestaurantId().equals(restaurant.getId()))
             throw new NotFoundException("Table Not Found!");
-        List<Order> orders = orderServiceHelper.findByTableIdAndStatus(table.getId(), OrderStatus.ACTIVE);
-        return null ;
-    }
+        List<String> orderNotes = orderServiceHelper.findNotesByTableIdAndStatus(table.getId(), OrderStatus.ACTIVE);
+        var check = checkRepository.findByTableIdAndStatus(tableId, CheckStatus.ACTIVE)
+                .orElse(null);
 
-    private List<List<UUID>> getItemIds(List<Order> orders) {
-        List<List<UUID>> itemIds = new ArrayList<>();
-        //orders.forEach(o -> itemIds.add(o.getItemIds()));
-        return itemIds;
-    }
-
-    private TableDetail mapToTableDetail(Table table, Restaurant restaurant, List<Order> orders){
-        return null;
+        return new TableDetail(table.getId(),check,orderNotes) ;
     }
 }

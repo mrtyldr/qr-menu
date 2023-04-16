@@ -40,4 +40,8 @@ public class OrderServiceHelper {
        return orderRepository.findAllByTableIdAndStatus(tableId,orderStatus);
 
     }
+
+    public List<String> findNotesByTableIdAndStatus(UUID tableId, OrderStatus orderStatus) {
+        return orderRepository.findAllNotesByTableIdAndStatus(tableId,orderStatus);
+    }
 }

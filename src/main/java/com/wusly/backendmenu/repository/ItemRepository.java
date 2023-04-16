@@ -15,13 +15,14 @@ public interface ItemRepository extends JpaRepository<Item, UUID> {
     @Query("""
             select new com.wusly.backendmenu.domain.item.ItemDto(
             i.id,
+            i.name,
             i.description,
             i.price,
             i.categoryId,
             c.name,
             i.photoLinkUrl
             )
-            from Item i 
+            from Item i
             inner join Category c on i.categoryId = c.id
             where i.restaurantId = :restaurantId and c.id = :categoryId
             """)
