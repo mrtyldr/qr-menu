@@ -17,8 +17,8 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/public/menu")
-@CrossOrigin
 @RequiredArgsConstructor
+@CrossOrigin
 public class MenuController {
 
     private final MenuService menuService;
@@ -26,17 +26,20 @@ public class MenuController {
     private final OrderService orderService;
 
     @GetMapping("/{restaurantId}")
+    @CrossOrigin
     Response<Menu> getMenu(@PathVariable UUID restaurantId) {
         return Response.of(menuService.getMenu(restaurantId));
     }
 
     @GetMapping("/{restaurantId}/tables")
+    @CrossOrigin
     Response<List<TableDto>> getTables(@PathVariable UUID restaurantId) {
         return Response.of(tableService.getTableNames(restaurantId));
     }
 
     @PostMapping("/{restaurantId}/order")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CrossOrigin
     void createOrder(@PathVariable UUID restaurantId, CreateOrderCommand command) {
         orderService.createOrder(restaurantId, command);
     }
