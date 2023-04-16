@@ -18,9 +18,16 @@ public class MenuService {
 
     private final ItemService itemService;
     private final CategoryService categoryService;
+    private final RestaurantService restaurantService;
 
     public Menu getMenu(UUID restaurantId) {
         var categories = categoryService.getRestaurantCategories(restaurantId);
+        return new Menu(mapTo(categories));
+    }
+
+    public Menu getMenu(String email) {
+        var restaurant = restaurantService.getRestaurantByEmail(email);
+        var categories = categoryService.getRestaurantCategories(restaurant.getId());
         return new Menu(mapTo(categories));
     }
 
