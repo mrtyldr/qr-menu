@@ -2,6 +2,7 @@ package com.wusly.backendmenu.controller.item;
 
 import com.wusly.backendmenu.controller.model.Response;
 import com.wusly.backendmenu.domain.item.AddItemCommand;
+import com.wusly.backendmenu.domain.item.ItemDto;
 import com.wusly.backendmenu.domain.item.UpdateItemCommand;
 import com.wusly.backendmenu.domain.restaurant.Menu;
 import com.wusly.backendmenu.service.ItemService;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -40,9 +42,13 @@ public class ItemController {
         itemService.updateItem(command, id, principal.getName());
     }
 
-    @GetMapping("")
+    @GetMapping("/menu")
     Response<Menu> getMenu(Principal principal) {
         return Response.of(menuService.getMenu(principal.getName()));
+    }
+    @GetMapping("")
+    Response<List<ItemDto>> getItems(Principal principal){
+       return Response.of(menuService.getItems(principal.getName()));
     }
 
     @DeleteMapping("/{id}")

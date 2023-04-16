@@ -21,14 +21,19 @@ public class CheckService {
         if (!checkRepository.existsByTableIdAndStatus(tableId, CheckStatus.ACTIVE))
             newCheck(tableId, order, checkItems);
         else
-            addCheck(tableId, order, checkItems);
+            addCheck(tableId, order, checkItems, itemIds);
     }
 
-    private void addCheck(UUID tableId, Order order, List<CheckItems> checkItems) {
+    private void addCheck(UUID tableId, Order order, List<CheckItems> checkItems, Map<UUID, Integer> itemIds) {
         var check = checkRepository.findByTableIdAndStatus(tableId, CheckStatus.ACTIVE)
                 .orElseThrow();
-        check.getItems().addAll(checkItems);
-        check.update(checkItems,order.getTotal());
+        check.getItems().stream()
+                .filter(checkItems::contains)
+                .forEach(i -> i.setQuantity(itemIds.get(i.getItemId()) + i.getQuantity()));
+        var itemsNotInCheck = check.getItems().stream()
+                .filter(i -> !checkItems.contains(i))
+                .toList();
+        check.update(itemsNotInCheck, order.getTotal());
         checkRepository.save(check);
     }
 

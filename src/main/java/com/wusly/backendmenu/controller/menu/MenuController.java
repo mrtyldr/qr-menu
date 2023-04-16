@@ -1,6 +1,7 @@
 package com.wusly.backendmenu.controller.menu;
 
 import com.wusly.backendmenu.controller.model.Response;
+import com.wusly.backendmenu.domain.item.ItemDto;
 import com.wusly.backendmenu.domain.order.CreateOrderCommand;
 import com.wusly.backendmenu.domain.restaurant.Menu;
 import com.wusly.backendmenu.domain.table.TableDto;
@@ -31,7 +32,10 @@ public class MenuController {
     Response<Menu> getMenu(@PathVariable UUID restaurantId) {
         return Response.of(menuService.getMenu(restaurantId));
     }
-
+    @GetMapping("/{restaurantId}/items")
+    Response<List<ItemDto>> getItems(@PathVariable UUID restaurantId){
+        return Response.of(menuService.getItems(restaurantId));
+    }
     @GetMapping("/{restaurantId}/tables")
     Response<List<TableDto>> getTables(@PathVariable UUID restaurantId) {
         return Response.of(tableService.getTableNames(restaurantId));

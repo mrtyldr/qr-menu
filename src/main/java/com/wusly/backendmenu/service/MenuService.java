@@ -39,4 +39,14 @@ public class MenuService {
                 });
         return map;
     }
+
+    public List<ItemDto> getItems(String email) {
+        var restaurant = restaurantService.getRestaurantByEmail(email);
+        return itemService.getRestaurantItemsDto(restaurant.getId());
+    }
+
+    public List<ItemDto> getItems(UUID restaurantId) {
+        var restaurant = restaurantService.getRestaurantById(restaurantId);
+        return itemService.getRestaurantItemsDto(restaurant.getId());
+    }
 }

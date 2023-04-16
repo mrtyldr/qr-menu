@@ -79,4 +79,8 @@ public class ItemService {
     public Set<Item> getOrderItems(Set<UUID> uuids, UUID restaurantId) {
         return itemRepository.getOrderItems(uuids,restaurantId);
     }
+
+    public List<ItemDto> getRestaurantItemsDto(UUID restaurantId) {
+        return itemRepository.getItemDtos(restaurantId);
+    }
 }
