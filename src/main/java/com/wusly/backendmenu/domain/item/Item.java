@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.UUID;
+
 @Entity
 @Setter
 @Getter
@@ -41,5 +42,11 @@ public class Item extends Aggregate<UUID> {
     }
 
     public Item() {
+    }
+
+    public void updated(UpdateItemCommand command) {
+        this.name = command.name();
+        this.price = command.price();
+        this.description = command.description();
     }
 }
