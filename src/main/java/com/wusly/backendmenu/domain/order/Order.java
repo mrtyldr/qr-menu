@@ -9,7 +9,9 @@ import lombok.Setter;
 import org.hibernate.annotations.Type;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -19,7 +21,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Order extends Aggregate<UUID> {
     private UUID restaurantId;
-    private List<UUID> itemIds;
+    private Collection<UUID> itemIds;
     private String note;
     private BigDecimal total;
     private UUID tableId;
@@ -28,7 +30,7 @@ public class Order extends Aggregate<UUID> {
 
     public Order(UUID id,
                  UUID restaurantId,
-                 List<UUID> itemIds,
+                 Collection<UUID> itemIds,
                  String note,
                  BigDecimal total,
                  UUID tableId,

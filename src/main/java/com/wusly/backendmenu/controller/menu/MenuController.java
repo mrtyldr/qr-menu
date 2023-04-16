@@ -12,7 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -40,8 +42,12 @@ public class MenuController {
     @PostMapping("/{restaurantId}/order")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @CrossOrigin
-    void createOrder(@PathVariable UUID restaurantId, CreateOrderCommand command) {
-        orderService.createOrder(restaurantId, command);
+    void createOrder(@PathVariable UUID restaurantId,
+                     @RequestBody CreateOrderCommand command,
+                     @RequestParam Map<String, String> itemIds) {
+        Map<UUID, Integer> itemIdsUuid = new HashMap<>();
+        itemIds.forEach((id, quantity) -> itemIdsUuid.put(UUID.fromString(id), Integer.parseInt(quantity)));
+        orderService.createOrder(restaurantId, command, itemIdsUuid);
     }
 
 

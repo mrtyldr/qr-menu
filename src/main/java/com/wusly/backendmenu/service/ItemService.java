@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -75,7 +76,7 @@ public class ItemService {
         return itemRepository.getItemDtos(restaurantId,categoryId);
     }
 
-    public List<Item> getOrderItems(List<UUID> uuids, UUID restaurantId) {
+    public Set<Item> getOrderItems(Set<UUID> uuids, UUID restaurantId) {
         return itemRepository.getOrderItems(uuids,restaurantId);
     }
 }

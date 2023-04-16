@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public interface ItemRepository extends JpaRepository<Item, UUID> {
@@ -32,5 +33,5 @@ public interface ItemRepository extends JpaRepository<Item, UUID> {
                     where i.id in :uuids and i.restaurantId = :restaurantId
                     """
     )
-    List<Item> getOrderItems(List<UUID> uuids, UUID restaurantId);
+    Set<Item> getOrderItems(Set<UUID> uuids, UUID restaurantId);
 }
