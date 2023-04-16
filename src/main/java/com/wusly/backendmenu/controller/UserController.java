@@ -37,6 +37,10 @@ public class UserController {
     Response<UserInfo> userInfo(Principal principal){
         return Response.of(restaurantService.getUserInfo(principal.getName()));
     }
+    @PostMapping("/ping")
+    void ping(){
+
+    }
     @PutMapping(value = "update-photo", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     Response<String> updatePhoto(@RequestParam MultipartFile photo, Principal principal){
         return Response.of(restaurantService.updatePhoto(photo,principal.getName()));
