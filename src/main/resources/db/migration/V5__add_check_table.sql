@@ -9,7 +9,8 @@ create table checks
 );
 create table check_items
 (
-    check_id uuid primary key,
+    id uuid primary key,
+    check_id uuid not null ,
     item_id  uuid not null,
     quantity int  not null,
     foreign key (check_id) references checks (id)
