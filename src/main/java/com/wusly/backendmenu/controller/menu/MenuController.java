@@ -4,10 +4,7 @@ import com.wusly.backendmenu.controller.model.Response;
 import com.wusly.backendmenu.domain.restaurant.Menu;
 import com.wusly.backendmenu.service.MenuService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.UUID;
@@ -20,8 +17,8 @@ public class MenuController {
 
     private final MenuService menuService;
 
-    @GetMapping("")
-    Response<Menu> getMenu(UUID restaurantId){
+    @GetMapping("/{restaurantId}")
+    Response<Menu> getMenu(@PathVariable UUID restaurantId){
        return Response.of(menuService.getMenu(restaurantId)) ;
     }
 
