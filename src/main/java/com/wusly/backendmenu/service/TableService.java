@@ -6,7 +6,9 @@ import com.wusly.backendmenu.repository.TableRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -27,5 +29,9 @@ public class TableService {
         );
 
         tableRepository.save(table);
+    }
+
+    public List<String> getTableNames(UUID restaurantId) {
+        return tableRepository.getTableNames(restaurantId);
     }
 }
