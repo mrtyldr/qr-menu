@@ -12,6 +12,7 @@ import com.wusly.backendmenu.repository.CheckRepository;
 import com.wusly.backendmenu.repository.ItemRepository;
 import com.wusly.backendmenu.repository.TableRepository;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,7 +64,7 @@ public class TableService {
     }
 
     private TableResponse toTableResponse(Table t) {
-        var check = checkRepository.findByTableIdAndStatus(t.getId(),CheckStatus.ACTIVE)
+        var check = checkRepository.findByTableIdAndStatus(t.getId(), CheckStatus.ACTIVE)
                 .orElse(new Check());
         return orderServiceHelper.existsByTableIdAndStatus(t.getId(), OrderStatus.ACTIVE) ? new TableResponse(
                 t.getId(),
@@ -89,6 +90,14 @@ public class TableService {
         var check = checkRepository.findByTableIdAndStatus(tableId, CheckStatus.ACTIVE)
                 .orElse(null);
 
-        return new TableDetail(table.getId(),check,orderNotes) ;
+        return new TableDetail(table.getId(), check, orderNotes);
+    }
+
+    @Transactional
+    public void delete(UUID id, String email) {
+        var restaurant = restaurantService.getRestaurantByEmail(email);
+        var table = tableRepository.findByIdAndRestaurantId(id, restaurant.getId())
+                .orElseThrow(() -> new NotFoundException("table with id : %s not found!"));
+        tableRepository.delete(table);
     }
 }

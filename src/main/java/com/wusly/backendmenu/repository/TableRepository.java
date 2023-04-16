@@ -30,4 +30,6 @@ public interface TableRepository extends JpaRepository<Table, UUID> {
     Optional<TableDto> getTableDto(UUID tableId);
 
     List<Table> findAllByRestaurantId(UUID id);
+
+    Optional<Table> findByIdAndRestaurantId(UUID id, UUID restaurantId);
 }

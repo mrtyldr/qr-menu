@@ -34,4 +34,9 @@ public class TableController {
     Response<TableDetail> getTableDetail(@PathVariable UUID id, Principal principal){
         return Response.of(tableService.getTableDetail(id,principal.getName()));
     }
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void deleteTable(@PathVariable UUID id, Principal principal) {
+        tableService.delete(id,principal.getName());
+    }
 }
