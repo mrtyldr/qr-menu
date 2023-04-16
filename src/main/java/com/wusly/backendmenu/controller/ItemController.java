@@ -5,6 +5,7 @@ import com.wusly.backendmenu.domain.item.UpdateItemCommand;
 import com.wusly.backendmenu.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,7 +18,7 @@ import java.util.UUID;
 public class ItemController {
     private final ItemService itemService;
 
-    @PostMapping("")
+    @PostMapping(value = "",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void addItem(@RequestBody AddItemCommand command, @RequestParam(required = false) MultipartFile photo, Principal principal) {
         itemService.addItem(command, photo, principal.getName());
