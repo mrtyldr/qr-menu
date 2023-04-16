@@ -33,7 +33,7 @@ public class SecurityConfig {
                         "/api/v1/user/login",
                         "/api/v1/user/register",
                         "/api/v1/user/ping",
-                        "/api/v1/public/**")
+                        "/api/v1/public/ping")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
