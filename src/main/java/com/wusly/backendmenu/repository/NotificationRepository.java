@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface NotificationRepository extends JpaRepository<Notification, UUID> {
     @Query("""
-            select n from Notification n 
+            select n from Notification n
             where n.restaurantId = :restaurantId and n.status = 'SENT'
             """)
     List<Notification> getActiveNotificationsForRestaurant(UUID restaurantId);

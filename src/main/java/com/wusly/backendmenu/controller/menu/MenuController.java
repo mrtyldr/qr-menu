@@ -20,6 +20,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/public/menu")
 @RequiredArgsConstructor
+@CrossOrigin
 public class MenuController {
 
     private final MenuService menuService;
