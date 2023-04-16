@@ -2,6 +2,7 @@ package com.wusly.backendmenu.service;
 
 import com.wusly.backendmenu.domain.item.AddItemCommand;
 import com.wusly.backendmenu.domain.item.Item;
+import com.wusly.backendmenu.domain.item.ItemDto;
 import com.wusly.backendmenu.domain.item.UpdateItemCommand;
 import com.wusly.backendmenu.error.NotFoundException;
 import com.wusly.backendmenu.repository.ItemRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -62,5 +64,14 @@ public class ItemService {
             throw new NotFoundException("Item not found!");
 
         itemRepository.delete(item);
+    }
+
+    public List<Item> getRestaurantItems(UUID restaurantId) {
+        return itemRepository.findAllByRestaurantId(restaurantId);
+
+    }
+
+    public List<ItemDto> getRestaurantItemsDto(UUID restaurantId, UUID categoryId) {
+        return itemRepository.getItemDtos(restaurantId,categoryId);
     }
 }

@@ -46,4 +46,8 @@ public class CategoryService {
                 c.getName()
         );
     }
+
+    public List<Category> getRestaurantCategories(UUID restaurantId) {
+        return categoryRepository.findAllByRestaurantId(restaurantId);
+    }
 }
