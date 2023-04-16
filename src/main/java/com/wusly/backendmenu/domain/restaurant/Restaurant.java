@@ -70,4 +70,8 @@ public class Restaurant extends Aggregate<UUID> implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public void photoUpdated(String photoUrlLink) {
+        this.photoUrlLink = photoUrlLink;
+    }
 }

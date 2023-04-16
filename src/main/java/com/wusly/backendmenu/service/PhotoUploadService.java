@@ -1,5 +1,6 @@
 package com.wusly.backendmenu.service;
 
+import com.wusly.backendmenu.domain.restaurant.Restaurant;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -7,6 +8,10 @@ import org.springframework.web.multipart.MultipartFile;
 public class PhotoUploadService {
 
     public String uploadPhoto(MultipartFile file){
+        return "uploaded";
+    }
+
+    public String uploadRestaurantPhoto(MultipartFile photo, Restaurant restaurant) {
         return "uploaded";
     }
 }
