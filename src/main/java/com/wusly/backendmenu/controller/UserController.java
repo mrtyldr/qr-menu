@@ -12,6 +12,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/user")
+@CrossOrigin
 public class UserController {
 
     private final AuthService authService;
