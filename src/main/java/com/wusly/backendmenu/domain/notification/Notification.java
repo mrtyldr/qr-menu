@@ -14,7 +14,6 @@ import java.util.UUID;
 @Entity
 @Setter
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
 public class Notification extends Aggregate<UUID> {
     private UUID restaurantId;
@@ -22,5 +21,14 @@ public class Notification extends Aggregate<UUID> {
     private NotificationType type;
 
     private UUID tableId;
+    @Enumerated(EnumType.STRING)
+    private NotificationStatus status;
 
+    public Notification(UUID id,UUID restaurantId, NotificationType type, UUID tableId, NotificationStatus status) {
+        this.id =id;
+        this.restaurantId = restaurantId;
+        this.type = type;
+        this.tableId = tableId;
+        this.status = status;
+    }
 }

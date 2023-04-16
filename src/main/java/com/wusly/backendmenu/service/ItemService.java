@@ -74,4 +74,8 @@ public class ItemService {
     public List<ItemDto> getRestaurantItemsDto(UUID restaurantId, UUID categoryId) {
         return itemRepository.getItemDtos(restaurantId,categoryId);
     }
+
+    public List<Item> getOrderItems(List<UUID> uuids, UUID restaurantId) {
+        return itemRepository.getOrderItems(uuids,restaurantId);
+    }
 }

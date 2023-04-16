@@ -6,6 +6,8 @@ import com.wusly.backendmenu.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class RestaurantService {
@@ -14,5 +16,10 @@ public class RestaurantService {
     public Restaurant getRestaurantByEmail(String email){
         return restaurantRepository.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("Restaurant not found!"));
+    }
+
+    public Restaurant getRestaurantById(UUID restaurantId) {
+        return restaurantRepository.findById(restaurantId)
+                .orElseThrow(() -> new NotFoundException("Restaurant Not Found!!"));
     }
 }

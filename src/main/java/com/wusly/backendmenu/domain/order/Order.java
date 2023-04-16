@@ -11,20 +11,34 @@ import org.hibernate.annotations.Type;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
+
 @Entity
 @Getter
 @Setter
 @Table(name = "orders")
 @NoArgsConstructor
-@AllArgsConstructor
 public class Order extends Aggregate<UUID> {
-        private UUID restaurantId;
-        private List<UUID> itemIds;
-        private String note;
-        private BigDecimal total;
-        private UUID tableId;
-        @Enumerated(EnumType.STRING)
-        private OrderStatus status;
+    private UUID restaurantId;
+    private List<UUID> itemIds;
+    private String note;
+    private BigDecimal total;
+    private UUID tableId;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
 
-
+    public Order(UUID id,
+                 UUID restaurantId,
+                 List<UUID> itemIds,
+                 String note,
+                 BigDecimal total,
+                 UUID tableId,
+                 OrderStatus status) {
+        this.id = id;
+        this.restaurantId = restaurantId;
+        this.itemIds = itemIds;
+        this.note = note;
+        this.total = total;
+        this.tableId = tableId;
+        this.status = status;
+    }
 }

@@ -25,4 +25,12 @@ public interface ItemRepository extends JpaRepository<Item, UUID> {
             where i.restaurantId = :restaurantId and c.id = :categoryId
             """)
     List<ItemDto> getItemDtos(UUID restaurantId, UUID categoryId);
+
+    @Query(
+            """
+                    select i from Item i
+                    where i.id in :uuids and i.restaurantId = :restaurantId
+                    """
+    )
+    List<Item> getOrderItems(List<UUID> uuids, UUID restaurantId);
 }

@@ -2,6 +2,7 @@ package com.wusly.backendmenu.service;
 
 import com.wusly.backendmenu.domain.table.CreateTableCommand;
 import com.wusly.backendmenu.domain.table.Table;
+import com.wusly.backendmenu.domain.table.TableDto;
 import com.wusly.backendmenu.repository.TableRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class TableService {
         tableRepository.save(table);
     }
 
-    public List<String> getTableNames(UUID restaurantId) {
+    public List<TableDto> getTableNames(UUID restaurantId) {
         return tableRepository.getTableNames(restaurantId);
     }
 }
