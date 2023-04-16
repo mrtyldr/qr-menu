@@ -1,5 +1,6 @@
 package com.wusly.backendmenu.service;
 
+import com.wusly.backendmenu.domain.check.Check;
 import com.wusly.backendmenu.domain.check.CheckStatus;
 import com.wusly.backendmenu.domain.item.ItemDto;
 import com.wusly.backendmenu.domain.order.Order;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -52,6 +54,7 @@ public class TableService {
 
     public List<TableResponse> getTableResponses(String email) {
         var restaurant = restaurantService.getRestaurantByEmail(email);
+
         return tableRepository.findAllByRestaurantId(restaurant.getId())
                 .stream()
                 .map(this::toTableResponse)
@@ -60,14 +63,18 @@ public class TableService {
     }
 
     private TableResponse toTableResponse(Table t) {
+        var check = checkRepository.findByTableIdAndStatus(t.getId(),CheckStatus.ACTIVE)
+                .orElse(new Check());
         return orderServiceHelper.existsByTableIdAndStatus(t.getId(), OrderStatus.ACTIVE) ? new TableResponse(
                 t.getId(),
                 t.getName(),
-                TableStatus.IN_USE
+                TableStatus.IN_USE,
+                check.getTotal()
         ) : new TableResponse(
                 t.getId(),
                 t.getName(),
-                TableStatus.FREE
+                TableStatus.FREE,
+                BigDecimal.ZERO
         );
 
     }

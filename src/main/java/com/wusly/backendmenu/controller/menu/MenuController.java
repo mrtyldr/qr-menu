@@ -56,13 +56,13 @@ public class MenuController {
 
     @PostMapping("/{restaurantId}/waiter")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void callWaiter(@PathVariable UUID restaurantId, CallWaiterCommand command) {
+    void callWaiter(@PathVariable UUID restaurantId, @RequestBody CallWaiterCommand command) {
         menuService.callWaiter(restaurantId, command.getTableId());
     }
 
     @PostMapping("/{restaurantId}/check")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void check(@PathVariable UUID restaurantId, CallWaiterCommand command) {
+    void check(@PathVariable UUID restaurantId, @RequestBody CallWaiterCommand command) {
         menuService.callCheck(restaurantId, command.getTableId());
     }
 
