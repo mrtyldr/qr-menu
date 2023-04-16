@@ -36,6 +36,10 @@ public class MenuController {
     Response<List<TableDto>> getTables(@PathVariable UUID restaurantId) {
         return Response.of(tableService.getTableNames(restaurantId));
     }
+    @PostMapping("/ping")
+    void ping(){
+
+    }
 
     @PostMapping("/{restaurantId}/order")
     @ResponseStatus(HttpStatus.NO_CONTENT)
