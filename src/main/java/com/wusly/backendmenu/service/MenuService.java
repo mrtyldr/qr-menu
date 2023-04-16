@@ -3,6 +3,7 @@ package com.wusly.backendmenu.service;
 import com.wusly.backendmenu.domain.category.Category;
 import com.wusly.backendmenu.domain.item.Item;
 import com.wusly.backendmenu.domain.item.ItemDto;
+import com.wusly.backendmenu.domain.notification.NotificationType;
 import com.wusly.backendmenu.domain.restaurant.Menu;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class MenuService {
     private final ItemService itemService;
     private final CategoryService categoryService;
     private final RestaurantService restaurantService;
+    private final NotificationService notificationService;
 
     public Menu getMenu(UUID restaurantId) {
         var categories = categoryService.getRestaurantCategories(restaurantId);
@@ -48,5 +50,15 @@ public class MenuService {
     public List<ItemDto> getItems(UUID restaurantId) {
         var restaurant = restaurantService.getRestaurantById(restaurantId);
         return itemService.getRestaurantItemsDto(restaurant.getId());
+    }
+
+    public void callWaiter(UUID restaurantId, UUID tableId) {
+        var restaurant = restaurantService.getRestaurantById(restaurantId);
+        notificationService.sendNotification(restaurant.getId(), NotificationType.WAITER, tableId);
+    }
+
+    public void callCheck(UUID restaurantId, UUID tableId) {
+        var restaurant = restaurantService.getRestaurantById(restaurantId);
+        notificationService.sendNotification(restaurant.getId(), NotificationType.CHECK, tableId);
     }
 }

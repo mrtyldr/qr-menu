@@ -9,6 +9,7 @@ import com.wusly.backendmenu.service.MenuService;
 import com.wusly.backendmenu.service.OrderService;
 import com.wusly.backendmenu.service.TableService;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,17 +33,37 @@ public class MenuController {
     Response<Menu> getMenu(@PathVariable UUID restaurantId) {
         return Response.of(menuService.getMenu(restaurantId));
     }
+
     @GetMapping("/{restaurantId}/items")
-    Response<List<ItemDto>> getItems(@PathVariable UUID restaurantId){
+    Response<List<ItemDto>> getItems(@PathVariable UUID restaurantId) {
         return Response.of(menuService.getItems(restaurantId));
     }
+
     @GetMapping("/{restaurantId}/tables")
     Response<List<TableDto>> getTables(@PathVariable UUID restaurantId) {
         return Response.of(tableService.getTableNames(restaurantId));
     }
-    @PostMapping("/ping")
-    void ping(){
 
+    @PostMapping("/ping")
+    void ping() {
+
+    }
+
+    @Value
+    public static class CallWaiterCommand {
+        UUID tableId;
+    }
+
+    @PostMapping("/{restaurantId}/waiter")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void callWaiter(@PathVariable UUID restaurantId, CallWaiterCommand command) {
+        menuService.callWaiter(restaurantId, command.getTableId());
+    }
+
+    @PostMapping("/{restaurantId}/check")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void check(@PathVariable UUID restaurantId, CallWaiterCommand command) {
+        menuService.callCheck(restaurantId, command.getTableId());
     }
 
     @PostMapping("/{restaurantId}/order")
