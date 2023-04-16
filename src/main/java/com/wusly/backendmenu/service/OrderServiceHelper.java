@@ -21,8 +21,8 @@ public class OrderServiceHelper {
     @Transactional
     public Order saveOrder(UUID restaurantId, CreateOrderCommand command, BigDecimal total, Map<UUID,Integer> itemIds){
         Order order = new Order(
-                restaurantId,
                 UUID.randomUUID(),
+                restaurantId,
                 itemIds.keySet(),
                 command.notes(),
                 total,
