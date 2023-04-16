@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.UUID;
 
@@ -18,10 +19,14 @@ import java.util.UUID;
 public class ItemController {
     private final ItemService itemService;
 
-    @PostMapping(value = "",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void addItem(@RequestBody AddItemCommand command, @RequestParam(required = false) MultipartFile photo, Principal principal) {
-        itemService.addItem(command, photo, principal.getName());
+    void addItem(@RequestParam String name,
+                 @RequestParam String description,
+                 @RequestParam BigDecimal price,
+                 @RequestParam UUID categoryId
+            , @RequestParam(required = false) MultipartFile photo, Principal principal) {
+        itemService.addItem(new AddItemCommand(name, description, price, categoryId), photo, principal.getName());
     }
 
     @PutMapping("/{id}")
@@ -33,7 +38,7 @@ public class ItemController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void deleteItem(@PathVariable UUID id, Principal principal) {
-        itemService.delete(id,principal.getName());
+        itemService.delete(id, principal.getName());
     }
 
 }
