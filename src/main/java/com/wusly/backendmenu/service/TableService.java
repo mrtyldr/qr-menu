@@ -17,12 +17,15 @@ public class TableService {
 
     @Transactional
     public void create(CreateTableCommand command, String email) {
+
         var restaurant = restaurantService.getRestaurantByEmail(email);
+
         var table = new Table(
                 UUID.randomUUID(),
                 command.name(),
                 restaurant.getId()
         );
+
         tableRepository.save(table);
     }
 }

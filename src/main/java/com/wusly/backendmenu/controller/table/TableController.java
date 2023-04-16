@@ -15,10 +15,9 @@ import java.security.Principal;
 public class TableController {
     private final TableService tableService;
 
-
     @PostMapping("")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void addTable(CreateTableCommand command, Principal principal){
+    void addTable(@RequestBody CreateTableCommand command, Principal principal){
         tableService.create(command,principal.getName());
     }
 }
