@@ -9,10 +9,8 @@ import com.wusly.backendmenu.repository.RestaurantSettingsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.security.Principal;
 import java.util.UUID;
 
 @Service
@@ -56,5 +54,11 @@ public class RestaurantService {
                 photoLink
         );
         restaurantSettingsRepository.save(restaurantSettings);
+    }
+
+    public RestaurantSettings getSettings(String email) {
+        var restaurant = getRestaurantByEmail(email);
+        return restaurantSettingsRepository.findById(restaurant.getId())
+                .orElseThrow(() -> new NotFoundException("Henüz bir setting oluşturmadınız!"));
     }
 }
