@@ -45,4 +45,10 @@ public class UserController {
     Response<String> updatePhoto(@RequestParam MultipartFile photo, Principal principal){
         return Response.of(restaurantService.updatePhoto(photo,principal.getName()));
     }
+
+    @PostMapping(value = "update-photo", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ResponseStatus(NO_CONTENT)
+    void settings(@RequestParam MultipartFile photo,@RequestParam String firstUrl,String secondUrl, Principal principal){
+        restaurantService.settings(photo,firstUrl,secondUrl,principal.getName());
+    }
 }
