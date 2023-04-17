@@ -11,7 +11,7 @@ public interface NotificationRepository extends JpaRepository<Notification, UUID
     @Query("""
             select n from Notification n
             where n.restaurantId = :restaurantId and n.status = 'SENT'
-            order by n.createdAt asc
+            order by n.createdAt des
             """)
     List<Notification> getActiveNotificationsForRestaurant(UUID restaurantId);
 
