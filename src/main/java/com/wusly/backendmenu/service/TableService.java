@@ -29,6 +29,7 @@ public class TableService {
     private final OrderServiceHelper orderServiceHelper;
     private final ItemService itemService;
     private final CheckRepository checkRepository;
+    private final NotificationService notificationService;
 
     @Transactional
     public void create(CreateTableCommand command, String email) {
@@ -96,6 +97,7 @@ public class TableService {
     @Transactional
     public void delete(UUID id, String email) {
         var restaurant = restaurantService.getRestaurantByEmail(email);
+        notificationService.tableDeleted(id);
         var table = tableRepository.findByIdAndRestaurantId(id, restaurant.getId())
                 .orElseThrow(() -> new NotFoundException("table with id : %s not found!"));
         tableRepository.delete(table);

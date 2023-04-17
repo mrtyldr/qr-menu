@@ -13,4 +13,6 @@ public interface NotificationRepository extends JpaRepository<Notification, UUID
             where n.restaurantId = :restaurantId and n.status = 'SENT'
             """)
     List<Notification> getActiveNotificationsForRestaurant(UUID restaurantId);
+
+    List<Notification> findAllByTableId(UUID id);
 }

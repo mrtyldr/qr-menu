@@ -61,4 +61,9 @@ public class NotificationService {
         notification.markAsRead();
         notificationRepository.save(notification);
     }
+
+    public void tableDeleted(UUID id) {
+        List<Notification> notifications = notificationRepository.findAllByTableId(id);
+        notificationRepository.deleteAll(notifications);
+    }
 }
