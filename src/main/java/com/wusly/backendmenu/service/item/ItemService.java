@@ -1,10 +1,11 @@
 package com.wusly.backendmenu.service.item;
 
+import com.amazonaws.services.s3.AmazonS3;
 import com.wusly.backendmenu.domain.item.AddItemCommand;
 import com.wusly.backendmenu.domain.item.Item;
 import com.wusly.backendmenu.domain.item.ItemDto;
-import com.wusly.backendmenu.domain.item.UpdateItemCommand;
 import com.wusly.backendmenu.error.NotFoundException;
+import com.wusly.backendmenu.infrastructure.aws.S3Utils;
 import com.wusly.backendmenu.repository.ItemRepository;
 import com.wusly.backendmenu.service.CategoryService;
 import com.wusly.backendmenu.service.PhotoUploadService;
@@ -27,21 +28,22 @@ public class ItemService {
     private final PhotoUploadService photoUploadService;
     private final ItemRepository itemRepository;
     private final CategoryService categoryService;
+    private final AmazonS3 s3Client;
 
     @Transactional
     public void addItem(AddItemCommand command, MultipartFile photo, String email) {
         var restaurant = restaurantService.getRestaurantByEmail(email);
         if (!categoryService.existsById(command.categoryId()))
             throw new NotFoundException("Category does not exists!");
-
+        var itemId = UUID.randomUUID();
         Item item = new Item(
-                UUID.randomUUID(),
+                itemId,
                 command.name(),
                 restaurant.getId(),
                 command.description(),
                 command.price(),
                 command.categoryId(),
-                photoUploadService.uploadPhoto(photo)
+                photoUploadService.uploadItemPhoto(photo,restaurant,itemId)
         );
         itemRepository.save(item);
     }
@@ -72,13 +74,11 @@ public class ItemService {
         itemRepository.save(item);
     }
 
-    public List<Item> getRestaurantItems(UUID restaurantId) {
-        return itemRepository.findAllByRestaurantId(restaurantId);
 
-    }
 
     public List<ItemDto> getRestaurantItemsDto(UUID restaurantId, UUID categoryId) {
-        return itemRepository.getItemDtos(restaurantId, categoryId);
+        return itemRepository.getItemDtos(restaurantId, categoryId)
+                .stream().map(this::mapLinks).toList();
     }
 
     public Set<Item> getOrderItems(Set<UUID> uuids, UUID restaurantId) {
@@ -92,5 +92,17 @@ public class ItemService {
     public Item findById(UUID itemId) {
         return itemRepository.findById(itemId)
                 .orElseThrow(() -> new NotFoundException("item With id: %s not found!".formatted(itemId)));
+    }
+
+    private ItemDto mapLinks(ItemDto i) {
+        return new ItemDto(
+                i.id(),
+                i.name(),
+                i.description(),
+                i.price(),
+                i.categoryId(),
+                i.categoryName(),
+                s3Client.generatePresignedUrl(S3Utils.getPublicUrlRequest(i.photoLinkUrl())).toString()
+        );
     }
 }

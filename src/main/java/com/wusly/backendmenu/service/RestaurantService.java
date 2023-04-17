@@ -1,9 +1,13 @@
 package com.wusly.backendmenu.service;
 
+import com.amazonaws.HttpMethod;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.wusly.backendmenu.domain.restaurant.Restaurant;
 import com.wusly.backendmenu.domain.restaurant.RestaurantSettings;
 import com.wusly.backendmenu.domain.restaurant.UserInfo;
 import com.wusly.backendmenu.error.NotFoundException;
+import com.wusly.backendmenu.infrastructure.aws.S3Utils;
 import com.wusly.backendmenu.repository.RestaurantRepository;
 import com.wusly.backendmenu.repository.RestaurantSettingsRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.Instant;
 import java.util.UUID;
 
 @Service
@@ -19,6 +24,7 @@ public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
     private final PhotoUploadService photoUploadService;
     private final RestaurantSettingsRepository restaurantSettingsRepository;
+    private final AmazonS3 s3Client;
 
     public Restaurant getRestaurantByEmail(String email) {
         return restaurantRepository.findByEmail(email)
@@ -64,7 +70,10 @@ public class RestaurantService {
 
     public RestaurantSettings getSettings(String email) {
         var restaurant = getRestaurantByEmail(email);
-        return restaurantSettingsRepository.findById(restaurant.getId())
+        var setting = restaurantSettingsRepository.findById(restaurant.getId())
                 .orElseThrow(() -> new NotFoundException("Henüz bir setting oluşturmadınız!"));
+        var url = s3Client.generatePresignedUrl(S3Utils.getPublicUrlRequest(setting.getPhotoUrl()));
+        setting.setPhotoUrl(url.toString());
+        return setting;
     }
 }

@@ -42,7 +42,7 @@ public class ItemController {
                     @RequestParam String description,
                     @RequestParam BigDecimal price,
                     @RequestParam UUID categoryId
-            , @RequestParam(required = false) MultipartFile photo, @PathVariable UUID id, Principal principal) {
+            , @RequestParam(required = false) MultipartFile photo,@RequestParam String mediaType, @PathVariable UUID id, Principal principal) {
         itemService.updateItem(name, description, price, categoryId, photo, id, principal.getName());
     }
 
