@@ -2,6 +2,9 @@ package com.wusly.backendmenu.domain.item;
 
 import com.wusly.backendmenu.core.Aggregate;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,7 +26,8 @@ public class Item extends Aggregate<UUID> {
     private UUID categoryId;
 
     private String photoLinkUrl;
-
+    @Enumerated(EnumType.STRING)
+    private ItemStatus status;
 
     public Item(UUID id,
                 String name,
@@ -39,6 +43,7 @@ public class Item extends Aggregate<UUID> {
         this.price = price;
         this.categoryId = categoryId;
         this.photoLinkUrl = photoLinkUrl;
+        this.status = ItemStatus.IN_STOCK;
     }
 
     public Item() {
@@ -50,5 +55,9 @@ public class Item extends Aggregate<UUID> {
         this.description = description;
         this.categoryId = categoryId;
         this.photoLinkUrl = photoUrlLink;
+    }
+
+    public void delete() {
+        this.status = ItemStatus.DELETED;
     }
 }

@@ -24,7 +24,7 @@ public interface ItemRepository extends JpaRepository<Item, UUID> {
             )
             from Item i
             inner join Category c on i.categoryId = c.id
-            where i.restaurantId = :restaurantId and c.id = :categoryId
+            where i.restaurantId = :restaurantId and c.id = :categoryId and i.status = 'IN_STOCK'
             """)
     List<ItemDto> getItemDtos(UUID restaurantId, UUID categoryId);
     @Query("""
@@ -39,7 +39,7 @@ public interface ItemRepository extends JpaRepository<Item, UUID> {
             )
             from Item i
             inner join Category c on i.categoryId = c.id
-            where i.restaurantId = :restaurantId
+            where i.restaurantId = :restaurantId and i.status = 'IN_STOCK'
 """)
     List<ItemDto> getItemDtos(UUID restaurantId);
 

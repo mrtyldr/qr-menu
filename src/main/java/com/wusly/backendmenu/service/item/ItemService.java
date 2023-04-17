@@ -64,12 +64,12 @@ public class ItemService {
         var restaurant = restaurantService.getRestaurantByEmail(email);
 
         var item = itemRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Item not found!"));
+                .orElseThrow(() -> new NotFoundException("Item : %s not found!".formatted(id)));
 
         if (!item.getRestaurantId().equals(restaurant.getId()))
-            throw new NotFoundException("Item not found!");
-
-        itemRepository.delete(item);
+            throw new NotFoundException("Item : %s not found!".formatted(item.getId()));
+        item.delete();
+        itemRepository.save(item);
     }
 
     public List<Item> getRestaurantItems(UUID restaurantId) {
