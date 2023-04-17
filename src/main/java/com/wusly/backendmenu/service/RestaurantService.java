@@ -47,13 +47,19 @@ public class RestaurantService {
     public void settings(MultipartFile photo, String firstUrl, String secondUrl, String email) {
         var restaurant = getRestaurantByEmail(email);
         var photoLink = photoUploadService.uploadRestaurantSettingPhoto(photo, restaurant);
-        RestaurantSettings restaurantSettings = new RestaurantSettings(
-                restaurant.getId(),
-                firstUrl,
-                secondUrl,
-                photoLink
-        );
-        restaurantSettingsRepository.save(restaurantSettings);
+        if (restaurantSettingsRepository.existsById(restaurant.getId())) {
+            var setting = restaurantSettingsRepository.findById(restaurant.getId()).get();
+            setting.update(firstUrl, secondUrl, photoLink);
+            restaurantSettingsRepository.save(setting);
+        } else {
+            RestaurantSettings restaurantSettings = new RestaurantSettings(
+                    restaurant.getId(),
+                    firstUrl,
+                    secondUrl,
+                    photoLink
+            );
+            restaurantSettingsRepository.save(restaurantSettings);
+        }
     }
 
     public RestaurantSettings getSettings(String email) {

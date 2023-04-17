@@ -24,4 +24,10 @@ public class RestaurantSettings {
     String firstUrl;
     String secondUrl;
     String photoUrl;
+
+    public void update(String firstUrl, String secondUrl, String photoLink) {
+        this.firstUrl = firstUrl;
+        this.secondUrl = secondUrl;
+        this.photoUrl = photoLink;
+    }
 }
