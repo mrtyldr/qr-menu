@@ -7,6 +7,7 @@ import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -14,14 +15,14 @@ import java.util.UUID;
 @Getter
 public class Check extends Aggregate<UUID> {
     @ElementCollection(fetch = FetchType.LAZY)
-    List<CheckItems> items;
+    Set<CheckItems> items;
     BigDecimal total;
 
     UUID tableId;
     @Enumerated(EnumType.STRING)
     CheckStatus status;
 
-    public Check(UUID id, List<CheckItems> items, BigDecimal total, UUID tableId, CheckStatus status) {
+    public Check(UUID id, Set<CheckItems> items, BigDecimal total, UUID tableId, CheckStatus status) {
         this.id = id;
         this.items = items;
         this.total = total;

@@ -31,7 +31,7 @@ public class CheckService {
             addCheck(tableId, order, checkItems, itemIds);
     }
 
-    private void addCheck(UUID tableId, Order order, List<CheckItems> checkItems, Map<UUID, Integer> itemIds) {
+    private void addCheck(UUID tableId, Order order, Set<CheckItems> checkItems, Map<UUID, Integer> itemIds) {
         var check = checkRepository.findByTableIdAndStatus(tableId, CheckStatus.ACTIVE)
                 .orElseThrow();
         check.getItems().stream()
@@ -44,7 +44,7 @@ public class CheckService {
         checkRepository.save(check);
     }
 
-    private void newCheck(UUID tableId, Order order, List<CheckItems> checkItems) {
+    private void newCheck(UUID tableId, Order order, Set<CheckItems> checkItems) {
         var check = new Check(
                 UUID.randomUUID(),
                 checkItems,
@@ -55,8 +55,8 @@ public class CheckService {
         checkRepository.save(check);
     }
 
-    private List<CheckItems> getCheckItems(Map<UUID, Integer> itemIds) {
-        List<CheckItems> checkItems = new ArrayList<>();
+    private Set<CheckItems> getCheckItems(Map<UUID, Integer> itemIds) {
+        Set<CheckItems> checkItems = new HashSet<>();
         itemIds.forEach((uuid, integer) -> checkItems.add(new CheckItems(uuid, integer)));
         return checkItems;
     }
@@ -64,7 +64,7 @@ public class CheckService {
     @Transactional
     public void closeCheck(CloseCheckCommand command, String email) {
         var restaurant = restaurantService.getRestaurantByEmail(email);
-        var check = checkRepository.findByTableIdAndStatus(command.tableId(),CheckStatus.ACTIVE)
+        var check = checkRepository.findByTableIdAndStatus(command.tableId(), CheckStatus.ACTIVE)
                 .orElseThrow(() -> new NotFoundException("CheckNotFound"));
         var orders = orderServiceHelper.findByTableIdAndStatus(command.tableId(), OrderStatus.ACTIVE);
         orders.forEach(Order::closed);

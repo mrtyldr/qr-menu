@@ -1,7 +1,10 @@
 package com.wusly.backendmenu.service;
 
 import com.wusly.backendmenu.domain.check.Check;
+import com.wusly.backendmenu.domain.check.CheckItemResponse;
+import com.wusly.backendmenu.domain.check.CheckResponse;
 import com.wusly.backendmenu.domain.check.CheckStatus;
+import com.wusly.backendmenu.domain.order.CheckItems;
 import com.wusly.backendmenu.domain.order.OrderStatus;
 import com.wusly.backendmenu.domain.table.*;
 import com.wusly.backendmenu.error.NotFoundException;
@@ -86,9 +89,22 @@ public class TableService {
             throw new NotFoundException("Table Not Found!");
         List<String> orderNotes = orderServiceHelper.findNotesByTableIdAndStatus(table.getId(), OrderStatus.ACTIVE);
         var check = checkRepository.findByTableIdAndStatus(tableId, CheckStatus.ACTIVE)
-                .orElse(null);
+                .orElseThrow();
+        var checkItemResponses = check.getItems().stream()
+                .map(i -> toCheckItemResponse(i))
+                .toList();
+        CheckResponse checkResponse = new CheckResponse(
+                check.getId(),
+                checkItemResponses,
+                check.getTotal()
 
-        return new TableDetail(table.getId(), check, orderNotes);
+        );
+        return new TableDetail(table.getId(), checkResponse, orderNotes);
+    }
+
+    private CheckItemResponse toCheckItemResponse(CheckItems i) {
+        var item = itemService.findById(i.getItemId());
+        return new CheckItemResponse(item.getId(), item.getName(), i.getQuantity(), item.getPrice().multiply(new BigDecimal(i.getQuantity())));
     }
 
     @Transactional

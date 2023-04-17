@@ -88,4 +88,9 @@ public class ItemService {
     public List<ItemDto> getRestaurantItemsDto(UUID restaurantId) {
         return itemRepository.getItemDtos(restaurantId);
     }
+
+    public Item findById(UUID itemId) {
+        return itemRepository.findById(itemId)
+                .orElseThrow();
+    }
 }
