@@ -95,6 +95,8 @@ public class ItemService {
     }
 
     private ItemDto mapLinks(ItemDto i) {
+        if(i.photoLinkUrl() == null)
+            return i;
         return new ItemDto(
                 i.id(),
                 i.name(),
