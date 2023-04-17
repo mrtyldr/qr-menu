@@ -14,4 +14,8 @@ public class PhotoUploadService {
     public String uploadRestaurantPhoto(MultipartFile photo, Restaurant restaurant) {
         return "uploaded";
     }
+
+    public String uploadRestaurantSettingPhoto(MultipartFile photo, Restaurant restaurant) {
+        return "uploaded";
+    }
 }
