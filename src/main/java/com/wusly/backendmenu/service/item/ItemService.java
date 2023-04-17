@@ -1,4 +1,4 @@
-package com.wusly.backendmenu.service;
+package com.wusly.backendmenu.service.item;
 
 import com.wusly.backendmenu.domain.item.AddItemCommand;
 import com.wusly.backendmenu.domain.item.Item;
@@ -6,6 +6,9 @@ import com.wusly.backendmenu.domain.item.ItemDto;
 import com.wusly.backendmenu.domain.item.UpdateItemCommand;
 import com.wusly.backendmenu.error.NotFoundException;
 import com.wusly.backendmenu.repository.ItemRepository;
+import com.wusly.backendmenu.service.CategoryService;
+import com.wusly.backendmenu.service.PhotoUploadService;
+import com.wusly.backendmenu.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

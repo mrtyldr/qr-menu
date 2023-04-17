@@ -2,7 +2,7 @@ package com.wusly.backendmenu.controller.notification;
 
 import com.wusly.backendmenu.controller.model.Response;
 import com.wusly.backendmenu.domain.notification.NotificationResponse;
-import com.wusly.backendmenu.service.NotificationService;
+import com.wusly.backendmenu.service.notification.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

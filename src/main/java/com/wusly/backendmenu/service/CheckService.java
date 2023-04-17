@@ -8,6 +8,7 @@ import com.wusly.backendmenu.domain.order.Order;
 import com.wusly.backendmenu.domain.order.OrderStatus;
 import com.wusly.backendmenu.error.NotFoundException;
 import com.wusly.backendmenu.repository.CheckRepository;
+import com.wusly.backendmenu.service.order.OrderServiceHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,4 +1,4 @@
-package com.wusly.backendmenu.service;
+package com.wusly.backendmenu.service.notification;
 
 import com.wusly.backendmenu.domain.notification.Notification;
 import com.wusly.backendmenu.repository.NotificationRepository;
@@ -18,4 +18,5 @@ public class NotificationServiceHelper {
         List<Notification> notifications = notificationRepository.findAllByTableId(id);
         notificationRepository.deleteAll(notifications);
     }
+
 }

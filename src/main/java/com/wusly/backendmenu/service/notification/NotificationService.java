@@ -1,4 +1,4 @@
-package com.wusly.backendmenu.service;
+package com.wusly.backendmenu.service.notification;
 
 import com.wusly.backendmenu.domain.notification.Notification;
 import com.wusly.backendmenu.domain.notification.NotificationResponse;
@@ -6,6 +6,8 @@ import com.wusly.backendmenu.domain.notification.NotificationStatus;
 import com.wusly.backendmenu.domain.notification.NotificationType;
 import com.wusly.backendmenu.error.NotFoundException;
 import com.wusly.backendmenu.repository.NotificationRepository;
+import com.wusly.backendmenu.service.RestaurantService;
+import com.wusly.backendmenu.service.TableService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

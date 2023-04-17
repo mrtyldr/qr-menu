@@ -1,10 +1,11 @@
 package com.wusly.backendmenu.service;
 
 import com.wusly.backendmenu.domain.category.Category;
-import com.wusly.backendmenu.domain.item.Item;
 import com.wusly.backendmenu.domain.item.ItemDto;
 import com.wusly.backendmenu.domain.notification.NotificationType;
 import com.wusly.backendmenu.domain.restaurant.Menu;
+import com.wusly.backendmenu.service.item.ItemService;
+import com.wusly.backendmenu.service.notification.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

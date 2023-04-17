@@ -5,7 +5,7 @@ import com.wusly.backendmenu.domain.item.AddItemCommand;
 import com.wusly.backendmenu.domain.item.ItemDto;
 import com.wusly.backendmenu.domain.item.UpdateItemCommand;
 import com.wusly.backendmenu.domain.restaurant.Menu;
-import com.wusly.backendmenu.service.ItemService;
+import com.wusly.backendmenu.service.item.ItemService;
 import com.wusly.backendmenu.service.MenuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

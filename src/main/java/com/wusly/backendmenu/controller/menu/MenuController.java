@@ -6,11 +6,10 @@ import com.wusly.backendmenu.domain.order.CreateOrderCommand;
 import com.wusly.backendmenu.domain.restaurant.Menu;
 import com.wusly.backendmenu.domain.table.TableDto;
 import com.wusly.backendmenu.service.MenuService;
-import com.wusly.backendmenu.service.OrderService;
+import com.wusly.backendmenu.service.order.OrderService;
 import com.wusly.backendmenu.service.TableService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,4 +1,4 @@
-package com.wusly.backendmenu.service;
+package com.wusly.backendmenu.service.order;
 
 import com.wusly.backendmenu.domain.order.CreateOrderCommand;
 import com.wusly.backendmenu.domain.order.Order;

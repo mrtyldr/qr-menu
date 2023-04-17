@@ -1,12 +1,8 @@
 package com.wusly.backendmenu.controller.errorhandler;
 
 
-
 import com.wusly.backendmenu.controller.model.ErrorResponse;
-import com.wusly.backendmenu.error.AlreadyExistsException;
-import com.wusly.backendmenu.error.ApiException;
-import com.wusly.backendmenu.error.ErrorCode;
-import com.wusly.backendmenu.error.WrongUserNamePasswordException;
+import com.wusly.backendmenu.error.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,7 +18,6 @@ import static org.springframework.http.HttpStatus.*;
 @RestControllerAdvice
 @RequiredArgsConstructor
 public class RestErrorHandler {
-
 
 
     @ExceptionHandler
@@ -50,22 +45,28 @@ public class RestErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(UNAUTHORIZED)
-    ErrorResponse handle(WrongUserNamePasswordException e){
+    ErrorResponse handle(WrongUserNamePasswordException e) {
         return ErrorResponse.of(ErrorCode.WRONG_USERNAME_PASSWORD.name(), e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(BAD_REQUEST)
     ErrorResponse handle(AlreadyExistsException e) {
-        return ErrorResponse.of(ErrorCode.ALREADY_EXISTS.name(),e.getMessage());
+        return ErrorResponse.of(ErrorCode.ALREADY_EXISTS.name(), e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(CONFLICT)
-    ErrorResponse handle(DataIntegrityViolationException e){
-        if(e.getMessage().contains("num_unique"))
-            return ErrorResponse.of(ErrorCode.ALREADY_EXISTS.name(),"Bu masa daha önceden oluşturuldu !");
-        return ErrorResponse.of(ErrorCode.UNKNOWN.name(),e.getMessage());
+    ErrorResponse handle(DataIntegrityViolationException e) {
+        if (e.getMessage().contains("num_unique"))
+            return ErrorResponse.of(ErrorCode.ALREADY_EXISTS.name(), "Bu masa daha önceden oluşturuldu !");
+        return ErrorResponse.of(ErrorCode.UNKNOWN.name(), e.getMessage());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(FORBIDDEN)
+    ErrorResponse handle(NotPermittedException e) {
+        return ErrorResponse.of(ErrorCode.FORBIDDEN.name(), e.getMessage());
     }
 
 }

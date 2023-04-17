@@ -50,4 +50,6 @@ public interface ItemRepository extends JpaRepository<Item, UUID> {
                     """
     )
     Set<Item> getOrderItems(Set<UUID> uuids, UUID restaurantId);
+
+    boolean existsByCategoryId(UUID categoryId);
 }
