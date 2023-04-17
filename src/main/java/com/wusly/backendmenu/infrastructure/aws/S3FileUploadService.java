@@ -23,6 +23,8 @@ public class S3FileUploadService implements PhotoUploadService {
 
     @Override
     public String uploadItemPhoto(MultipartFile file, Restaurant restaurant, UUID itemId) {
+        if(file == null)
+            return null;
         String key = "%s/item/photo_%s.%s".formatted(restaurant.getId(),itemId,getContentTypeExtension(file.getContentType()));
         uploadPhoto(file,key);
         return key;
@@ -31,6 +33,8 @@ public class S3FileUploadService implements PhotoUploadService {
 
     @Override
     public String uploadRestaurantPhoto(MultipartFile photo, Restaurant restaurant) {
+        if(photo == null)
+            return null;
         String key = "%s/pp/photo.%s".formatted(restaurant.getId(),getContentTypeExtension(photo.getContentType()));
         uploadPhoto(photo,key);
         return key;
@@ -38,6 +42,8 @@ public class S3FileUploadService implements PhotoUploadService {
 
     @Override
     public String updateItemPhoto(Item item, Restaurant restaurant, MultipartFile photo) {
+        if(photo == null)
+            return null;
         String key = "%s/item/photo_%s.%s".formatted(restaurant.getId(),item.getId(),getContentTypeExtension(photo.getContentType()));
         uploadPhoto(photo,key);
         return key;
@@ -45,6 +51,8 @@ public class S3FileUploadService implements PhotoUploadService {
 
     @Override
     public String uploadRestaurantSettingPhoto(MultipartFile photo, Restaurant restaurant) {
+        if(photo == null)
+            return null;
         String key = "setting/photo_%s.%s".formatted(restaurant.getId(),getContentTypeExtension(photo.getContentType()));
         uploadPhoto(photo,key);
         return key;
