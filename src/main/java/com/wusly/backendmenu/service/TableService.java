@@ -88,18 +88,25 @@ public class TableService {
         if (!table.getRestaurantId().equals(restaurant.getId()))
             throw new NotFoundException("Table Not Found!");
         List<String> orderNotes = orderServiceHelper.findNotesByTableIdAndStatus(table.getId(), OrderStatus.ACTIVE);
+        if (checkRepository.existsByTableIdAndStatus(table.getId(), CheckStatus.ACTIVE)) {
+            CheckResponse checkResponse = getCheckResponse(tableId);
+        }
+
+        return new TableDetail(table.getId(), null, null);
+    }
+
+    private CheckResponse getCheckResponse(UUID tableId) {
         var check = checkRepository.findByTableIdAndStatus(tableId, CheckStatus.ACTIVE)
                 .orElseThrow();
         var checkItemResponses = check.getItems().stream()
-                .map(i -> toCheckItemResponse(i))
+                .map(this::toCheckItemResponse)
                 .toList();
         CheckResponse checkResponse = new CheckResponse(
                 check.getId(),
                 checkItemResponses,
                 check.getTotal()
-
         );
-        return new TableDetail(table.getId(), checkResponse, orderNotes);
+        return checkResponse;
     }
 
     private CheckItemResponse toCheckItemResponse(CheckItems i) {
