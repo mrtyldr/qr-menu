@@ -61,7 +61,7 @@ public class CategoryService {
         var category = categoryRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Category with Id: %s not found!"));
         if(itemServiceHelper.existsByCategoryId(id))
-            throw new NotPermittedException("Before deleting the category you should delete the items In category!");
+            throw new NotPermittedException("Kategori silme işleminden önce kategorideki ürünleri kaldırmalısınız.");
         if(!restaurant.getId().equals(category.getRestaurantId()))
             throw new NotFoundException("Category with Id: %s not found!");
         categoryRepository.delete(category);
