@@ -91,6 +91,6 @@ public class ItemService {
 
     public Item findById(UUID itemId) {
         return itemRepository.findById(itemId)
-                .orElseThrow();
+                .orElseThrow(() -> new NotFoundException("item With id: %s not found!"));
     }
 }

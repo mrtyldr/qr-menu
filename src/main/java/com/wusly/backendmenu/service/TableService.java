@@ -90,6 +90,7 @@ public class TableService {
         List<String> orderNotes = orderServiceHelper.findNotesByTableIdAndStatus(table.getId(), OrderStatus.ACTIVE);
         if (checkRepository.existsByTableIdAndStatus(table.getId(), CheckStatus.ACTIVE)) {
             CheckResponse checkResponse = getCheckResponse(tableId);
+            return new TableDetail(table.getId(), checkResponse, orderNotes);
         }
 
         return new TableDetail(table.getId(), null, null);
@@ -101,12 +102,11 @@ public class TableService {
         var checkItemResponses = check.getItems().stream()
                 .map(this::toCheckItemResponse)
                 .toList();
-        CheckResponse checkResponse = new CheckResponse(
+        return new CheckResponse(
                 check.getId(),
                 checkItemResponses,
                 check.getTotal()
         );
-        return checkResponse;
     }
 
     private CheckItemResponse toCheckItemResponse(CheckItems i) {
