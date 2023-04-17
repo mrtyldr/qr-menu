@@ -44,9 +44,11 @@ public class Item extends Aggregate<UUID> {
     public Item() {
     }
 
-    public void updated(UpdateItemCommand command) {
-        this.name = command.name();
-        this.price = command.price();
-        this.description = command.description();
+    public void updated(String name, String description, BigDecimal price, UUID categoryId, String photoUrlLink) {
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.categoryId = categoryId;
+        this.photoLinkUrl = photoUrlLink;
     }
 }

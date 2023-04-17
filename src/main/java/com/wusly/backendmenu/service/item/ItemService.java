@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -46,14 +47,15 @@ public class ItemService {
     }
 
     @Transactional
-    public void updateItem(UpdateItemCommand command, UUID id, String email) {
+    public void updateItem(String name, String description, BigDecimal price, UUID categoryId, MultipartFile photo, UUID id, String email) {
         var item = itemRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Item Not found!"));
         var restaurant = restaurantService.getRestaurantByEmail(email);
         if (!item.getRestaurantId().equals(restaurant.getId()))
             throw new NotFoundException("You don't have access to this item");
+        var photoUrlLink = photoUploadService.updateItemPhoto(item, restaurant, photo);
 
-        item.updated(command);
+        item.updated(name, description, price, categoryId, photoUrlLink);
         itemRepository.save(item);
     }
 
@@ -76,11 +78,11 @@ public class ItemService {
     }
 
     public List<ItemDto> getRestaurantItemsDto(UUID restaurantId, UUID categoryId) {
-        return itemRepository.getItemDtos(restaurantId,categoryId);
+        return itemRepository.getItemDtos(restaurantId, categoryId);
     }
 
     public Set<Item> getOrderItems(Set<UUID> uuids, UUID restaurantId) {
-        return itemRepository.getOrderItems(uuids,restaurantId);
+        return itemRepository.getOrderItems(uuids, restaurantId);
     }
 
     public List<ItemDto> getRestaurantItemsDto(UUID restaurantId) {

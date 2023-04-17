@@ -38,17 +38,22 @@ public class ItemController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void updateItem(@RequestBody UpdateItemCommand command, @PathVariable UUID id, Principal principal) {
-        itemService.updateItem(command, id, principal.getName());
+    void updateItem(@RequestParam String name,
+                    @RequestParam String description,
+                    @RequestParam BigDecimal price,
+                    @RequestParam UUID categoryId
+            , @RequestParam(required = false) MultipartFile photo, @PathVariable UUID id, Principal principal) {
+        itemService.updateItem(name, description, price, categoryId, photo, id, principal.getName());
     }
 
     @GetMapping("/menu")
     Response<Menu> getMenu(Principal principal) {
         return Response.of(menuService.getMenu(principal.getName()));
     }
+
     @GetMapping("")
-    Response<List<ItemDto>> getItems(Principal principal){
-       return Response.of(menuService.getItems(principal.getName()));
+    Response<List<ItemDto>> getItems(Principal principal) {
+        return Response.of(menuService.getItems(principal.getName()));
     }
 
     @DeleteMapping("/{id}")
