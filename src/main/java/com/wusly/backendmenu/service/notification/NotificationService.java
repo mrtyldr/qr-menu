@@ -65,4 +65,10 @@ public class NotificationService {
     }
 
 
+    public void markAllAsRead(String email) {
+        var restaurant = restaurantService.getRestaurantByEmail(email);
+        List<Notification> notifications = notificationRepository.findAllByRestaurantId(restaurant.getId());
+        notifications.forEach(Notification::markAsRead);
+        notificationRepository.saveAll(notifications);
+    }
 }

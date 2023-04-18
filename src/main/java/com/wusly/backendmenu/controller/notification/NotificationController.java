@@ -21,8 +21,14 @@ public class NotificationController {
     Response<List<NotificationResponse>> getNotifications(Principal principal) {
         return Response.of(notificationService.getNotifications(principal.getName()));
     }
+
     @PutMapping("/{id}/mark-as-read")
-    void markAsRead(@PathVariable UUID id, Principal principal){
-        notificationService.markAsRead(id,principal.getName());
+    void markAsRead(@PathVariable UUID id, Principal principal) {
+        notificationService.markAsRead(id, principal.getName());
+    }
+
+    @PutMapping("/mark-all-as-read")
+    void markAllAsRead(Principal principal) {
+        notificationService.markAllAsRead(principal.getName());
     }
 }
