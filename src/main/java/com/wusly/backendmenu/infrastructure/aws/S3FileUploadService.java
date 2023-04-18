@@ -82,7 +82,7 @@ public class S3FileUploadService implements PhotoUploadService {
     }
     private void uploadPhoto(InputStream qr, String key) {
             var result = s3client.putObject(
-                    "wuslyrestaurant",
+                    "menuprojesi",
                     "restaurant/%s".formatted(key),
                     qr,
                     new ObjectMetadata()
