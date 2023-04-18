@@ -69,7 +69,7 @@ public class S3FileUploadService implements PhotoUploadService {
     private void uploadPhoto(MultipartFile photo, String key) {
         try {
             var result = s3client.putObject(
-                    "wuslyrestaurant",
+                    "menuprojesi",
                     "restaurant/%s".formatted(key),
                     photo.getInputStream(),
                     new ObjectMetadata()

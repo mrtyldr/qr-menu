@@ -18,7 +18,7 @@ public class S3Utils {
         expTimeMillis += 1000 * 60 * 60;
         expiration.setTime(expTimeMillis);
         return new GeneratePresignedUrlRequest(
-                "wuslyrestaurant",
+                "menuprojesi",
                 "restaurant/%s".formatted(url)
         )
                 .withMethod(HttpMethod.GET)
