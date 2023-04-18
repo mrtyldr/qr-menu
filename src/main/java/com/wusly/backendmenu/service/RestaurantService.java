@@ -76,4 +76,12 @@ public class RestaurantService {
         setting.setPhotoUrl(url.toString());
         return setting;
     }
+    public RestaurantSettings getSettings(UUID restaurantId) {
+        var restaurant = getRestaurantById(restaurantId);
+        var setting = restaurantSettingsRepository.findById(restaurant.getId())
+                .orElseThrow(() -> new NotFoundException("Henüz bir setting oluşturmadınız!"));
+        var url = s3Client.generatePresignedUrl(S3Utils.getPublicUrlRequest(setting.getPhotoUrl()));
+        setting.setPhotoUrl(url.toString());
+        return setting;
+    }
 }

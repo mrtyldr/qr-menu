@@ -4,8 +4,10 @@ import com.wusly.backendmenu.controller.model.Response;
 import com.wusly.backendmenu.domain.item.ItemDto;
 import com.wusly.backendmenu.domain.order.CreateOrderCommand;
 import com.wusly.backendmenu.domain.restaurant.Menu;
+import com.wusly.backendmenu.domain.restaurant.RestaurantSettings;
 import com.wusly.backendmenu.domain.table.TableDto;
 import com.wusly.backendmenu.service.MenuService;
+import com.wusly.backendmenu.service.RestaurantService;
 import com.wusly.backendmenu.service.order.OrderService;
 import com.wusly.backendmenu.service.TableService;
 import lombok.Data;
@@ -14,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +31,7 @@ public class MenuController {
     private final MenuService menuService;
     private final TableService tableService;
     private final OrderService orderService;
+    private final RestaurantService restaurantService;
 
     @GetMapping("/{restaurantId}")
     Response<Menu> getMenu(@PathVariable UUID restaurantId) {
@@ -73,6 +77,11 @@ public class MenuController {
         Map<UUID, Integer> itemIdsUuid = new HashMap<>();
         command.itemIds().forEach((id, quantity) -> itemIdsUuid.put(UUID.fromString(id), Integer.parseInt(quantity)));
         orderService.createOrder(restaurantId, command, itemIdsUuid);
+    }
+
+    @GetMapping("{restaurantId}/info")
+    Response<RestaurantSettings> getSettings(@PathVariable UUID restaurantId) {
+        return Response.of(restaurantService.getSettings(restaurantId));
     }
 
 
