@@ -1,5 +1,6 @@
 package com.wusly.backendmenu.controller;
 
+import com.wusly.backendmenu.controller.model.Response;
 import com.wusly.backendmenu.service.QRService;
 import com.wusly.backendmenu.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +21,8 @@ public class QrController {
     private final RestaurantService restaurantService;
 
     @GetMapping("")
-    String getBarcode(Principal principal) {
+    Response<String> getBarcode(Principal principal) {
         var restaurant = restaurantService.getRestaurantByEmail(principal.getName());
-        return qrService.createQrForRestaurant(restaurant.getId());
+        return Response.of(qrService.createQrForRestaurant(restaurant.getId()));
     }
 }
