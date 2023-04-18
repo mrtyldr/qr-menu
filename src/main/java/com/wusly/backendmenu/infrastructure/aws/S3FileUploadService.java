@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -58,6 +59,13 @@ public class S3FileUploadService implements PhotoUploadService {
         return key;
     }
 
+    @Override
+    public String uploadQrForRestaurant(UUID restaurantId, InputStream qrCode) {
+        String key = "%s/qr/qr_%s.png".formatted(restaurantId,restaurantId);
+        uploadPhoto(qrCode,key);
+        return key;
+    }
+
     private void uploadPhoto(MultipartFile photo, String key) {
         try {
             var result = s3client.putObject(
@@ -71,6 +79,15 @@ public class S3FileUploadService implements PhotoUploadService {
             throw new PhotoUploadUnSuccessfulException("photo upload unsuccessful!");
         }
 
+    }
+    private void uploadPhoto(InputStream qr, String key) {
+            var result = s3client.putObject(
+                    "wuslyrestaurant",
+                    "restaurant/%s".formatted(key),
+                    qr,
+                    new ObjectMetadata()
+            );
+            log.info(result.toString());
     }
 
     public static String getContentTypeExtension(String contentType) {

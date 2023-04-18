@@ -5,6 +5,7 @@ import com.wusly.backendmenu.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import software.amazon.awssdk.services.s3.endpoints.internal.Value;
 
 import java.awt.image.BufferedImage;
 import java.security.Principal;
@@ -18,8 +19,8 @@ public class QrController {
     private final QRService qrService;
     private final RestaurantService restaurantService;
 
-    @GetMapping(value = "/barcode", produces = MediaType.IMAGE_PNG_VALUE)
-    BufferedImage getBarcode(Principal principal) {
+    @GetMapping("")
+    String getBarcode(Principal principal) {
         var restaurant = restaurantService.getRestaurantByEmail(principal.getName());
         return qrService.createQrForRestaurant(restaurant.getId());
     }

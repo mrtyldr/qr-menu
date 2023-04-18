@@ -4,6 +4,7 @@ import com.wusly.backendmenu.domain.item.Item;
 import com.wusly.backendmenu.domain.restaurant.Restaurant;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
 import java.util.UUID;
 
 
@@ -17,4 +18,5 @@ public interface PhotoUploadService {
 
     public String uploadRestaurantSettingPhoto(MultipartFile photo, Restaurant restaurant);
 
+    String uploadQrForRestaurant(UUID restaurantId, InputStream qrCode);
 }
