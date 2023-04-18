@@ -31,7 +31,7 @@ public class QRService {
         BitMatrix bitMatrix =
                 null;
         try {
-            bitMatrix = qrCodeWriter.encode("https://localhost:3000/?restaurantId=%s".formatted(restaurantId),
+            bitMatrix = qrCodeWriter.encode("https://menu.wusly.com/?restaurantId=%s".formatted(restaurantId),
                     BarcodeFormat.QR_CODE, 200, 200);
         } catch (WriterException e) {
             throw new RuntimeException("Barcode creation couldn't complete!!", e);
