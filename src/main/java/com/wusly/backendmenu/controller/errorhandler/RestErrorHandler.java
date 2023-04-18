@@ -69,4 +69,12 @@ public class RestErrorHandler {
         return ErrorResponse.of(ErrorCode.FORBIDDEN.name(), e.getMessage());
     }
 
+
+    @ExceptionHandler
+    @ResponseStatus(PAYLOAD_TOO_LARGE)
+    ErrorResponse handle(PhotoUploadUnSuccessfulException e) {
+        return ErrorResponse.of(ErrorCode.MAX_UPLOAD_SIZE_EXCEEDED.name(), e.getMessage());
+    }
+
+
 }

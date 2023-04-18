@@ -6,6 +6,7 @@ import com.wusly.backendmenu.domain.restaurant.AuthenticationResponse;
 import com.wusly.backendmenu.domain.restaurant.LoginCommand;
 import com.wusly.backendmenu.domain.restaurant.Restaurant;
 import com.wusly.backendmenu.domain.restaurant.RestaurantCreateCommand;
+import com.wusly.backendmenu.error.WrongUserNamePasswordException;
 import com.wusly.backendmenu.repository.RestaurantRepository;
 import com.wusly.backendmenu.security.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -45,7 +46,7 @@ public class AuthService {
                 )
         );
         var user = restaurantRepository.findByEmail(command.email())
-                .orElseThrow(() -> new RuntimeException("Authentication is not successful!!"));
+                .orElseThrow(() -> new WrongUserNamePasswordException("Authentication is not successful!!"));
 
 
         return new AuthenticationResponse(
