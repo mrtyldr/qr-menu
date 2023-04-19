@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,9 +38,9 @@ public class CheckService {
         check.getItems().stream()
                 .filter(checkItems::contains)
                 .forEach(i -> i.setQuantity(itemIds.get(i.getItemId()) + i.getQuantity()));
-        var itemsNotInCheck = check.getItems().stream()
-                .filter(i -> !checkItems.contains(i))
-                .toList();
+        var itemsNotInCheck = checkItems.stream()
+                .filter(i -> !check.getItems().contains(i))
+                .collect(Collectors.toSet());
         check.update(itemsNotInCheck, order.getTotal());
         checkRepository.save(check);
     }

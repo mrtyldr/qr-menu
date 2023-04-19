@@ -33,7 +33,7 @@ public class Check extends Aggregate<UUID> {
     public Check() {
     }
 
-    public void update(List<CheckItems> checkItems, BigDecimal total) {
+    public void update(Set<CheckItems> checkItems, BigDecimal total) {
         this.items.addAll(checkItems);
         this.total = total.add(this.total);
     }
