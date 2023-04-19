@@ -6,7 +6,6 @@ import com.wusly.backendmenu.domain.category.CategoryResponse;
 import com.wusly.backendmenu.error.NotFoundException;
 import com.wusly.backendmenu.error.NotPermittedException;
 import com.wusly.backendmenu.repository.CategoryRepository;
-import com.wusly.backendmenu.service.item.ItemService;
 import com.wusly.backendmenu.service.item.ItemServiceHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

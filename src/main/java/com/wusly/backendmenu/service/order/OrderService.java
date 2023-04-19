@@ -3,7 +3,6 @@ package com.wusly.backendmenu.service.order;
 import com.wusly.backendmenu.domain.item.Item;
 import com.wusly.backendmenu.domain.notification.NotificationType;
 import com.wusly.backendmenu.domain.order.CreateOrderCommand;
-import com.wusly.backendmenu.repository.OrderRepository;
 import com.wusly.backendmenu.service.CheckService;
 import com.wusly.backendmenu.service.item.ItemService;
 import com.wusly.backendmenu.service.RestaurantService;
@@ -19,7 +18,6 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class OrderService {
-    private final OrderRepository orderRepository;
     private final RestaurantService restaurantService;
     private final ItemService itemService;
     private final OrderServiceHelper orderServiceHelper;

@@ -1,7 +1,6 @@
 package com.wusly.backendmenu.domain.restaurant;
 
 
-import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;

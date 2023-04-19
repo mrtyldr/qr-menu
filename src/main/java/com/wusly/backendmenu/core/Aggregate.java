@@ -7,7 +7,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
 import org.springframework.data.domain.Persistable;
-import org.springframework.util.Assert;
 
 import java.io.Serializable;
 import java.time.OffsetDateTime;

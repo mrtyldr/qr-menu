@@ -3,7 +3,6 @@ package com.wusly.backendmenu.controller.item;
 import com.wusly.backendmenu.controller.model.Response;
 import com.wusly.backendmenu.domain.item.AddItemCommand;
 import com.wusly.backendmenu.domain.item.ItemDto;
-import com.wusly.backendmenu.domain.item.UpdateItemCommand;
 import com.wusly.backendmenu.domain.restaurant.Menu;
 import com.wusly.backendmenu.service.item.ItemService;
 import com.wusly.backendmenu.service.MenuService;

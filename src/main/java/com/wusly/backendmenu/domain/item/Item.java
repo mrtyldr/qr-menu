@@ -2,7 +2,6 @@ package com.wusly.backendmenu.domain.item;
 
 import com.wusly.backendmenu.core.Aggregate;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Getter;

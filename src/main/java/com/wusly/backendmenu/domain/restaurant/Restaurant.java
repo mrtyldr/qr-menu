@@ -1,9 +1,7 @@
 package com.wusly.backendmenu.domain.restaurant;
 
 import com.wusly.backendmenu.core.Aggregate;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
-import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;

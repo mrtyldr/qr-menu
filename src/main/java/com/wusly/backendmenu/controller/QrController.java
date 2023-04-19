@@ -4,11 +4,9 @@ import com.wusly.backendmenu.controller.model.Response;
 import com.wusly.backendmenu.service.QRService;
 import com.wusly.backendmenu.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
-import software.amazon.awssdk.services.s3.endpoints.internal.Value;
 
-import java.awt.image.BufferedImage;
+import org.springframework.web.bind.annotation.*;
+
 import java.security.Principal;
 
 @RestController

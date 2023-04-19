@@ -1,8 +1,7 @@
 package com.wusly.backendmenu.service;
 
-import com.amazonaws.HttpMethod;
+
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.wusly.backendmenu.domain.restaurant.Restaurant;
 import com.wusly.backendmenu.domain.restaurant.RestaurantSettings;
 import com.wusly.backendmenu.domain.restaurant.UserInfo;
